@@ -1,14 +1,12 @@
-int pinNum = 12;
-
 void setup() {
   // put your setup code here, to run once:
-  pinMode(pinNum, OUTPUT);
+  Serial.begin(9600);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  digitalWrite(pinNum, HIGH);
+
+  Serial.println("Stop");
   delay(1000);
-  digitalWrite(pinNum, LOW);
-  delay(1000);
+  exit(0);
 }
