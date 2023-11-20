@@ -1,45 +1,34 @@
-#include <Wire.h>
-#include <DFRobot_ADS1115.h>
+#include <ADS1X15.h>
 
-//DFRobot_ADS1115 ads;
+ADS1115 ADS(0x48);
 
-void setup(void)
+void setup()
 {
-    Serial.begin(115200);
-    ads.setAddr_ADS1115(ADS1115_IIC_ADDRESS0);   // 0x48
-    ads.setGain(eGAIN_TWOTHIRDS);   // 2/3x gain
-    ads.setMode(eMODE_SINGLE);       // single-shot mode
-    ads.setRate(eRATE_128);          // 128SPS (default)
-    ads.setOSMode(eOSMODE_SINGLE);   // Set to start a single-conversion
-    ads.init();
+  Serial.begin(9600);
+  Serial.println(__FILE__);
+  Serial.print("ADS1X15_LIB_VERSION: ");
+  Serial.println(ADS1X15_LIB_VERSION);
+
+  ADS.begin();
+  ADS.setGain(0);  // 6.144 volt
+  Serial.println("Voltage");
 }
 
-void loop(void)
+void loop()
 {
-    if (ads.checkADS1115())
-    {
-        int16_t adc0, adc1, adc2, adc3;
-        adc0 = ads.readVoltage(0);
-        Serial.print("A0:");
-        Serial.print(adc0);
-        Serial.print("mV,  ");
-        adc1 = ads.readVoltage(1);
-        Serial.print("A1:");
-        Serial.print(adc1);
-        Serial.print("mV,  ");
-        adc2 = ads.readVoltage(2);
-        Serial.print("A2:");
-        Serial.print(adc2);
-        Serial.print("mV,  ");
-        adc3 = ads.readVoltage(3);
-        Serial.print("A3:");
-        Serial.print(adc3);
-        Serial.println("mV");
-    }
-    else
-    {
-        Serial.println("ADS1115 Disconnected!");
-    }
+  int16_t A0 = ADS.readADC(0);
+  int16_t A1 = ADS.readADC(1);
+  int16_t A2 = ADS.readADC(2);
+  int16_t A3 = ADS.readADC(3);
 
-    delay(1000);
+  Serial.print("A0: ");
+  Serial.print(ADS.toVoltage(A0), 3);
+  Serial.print(" A1: ");
+  Serial.print(ADS.toVoltage(A1), 3);
+  Serial.print(" A2: ");
+  Serial.print(ADS.toVoltage(A2), 3);
+  Serial.print(" A3: ");
+  Serial.println(ADS.toVoltage(A3), 3);
+
+  delay(500);
 }
