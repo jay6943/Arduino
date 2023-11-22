@@ -21,14 +21,14 @@ void loop()
   int16_t A2 = ADS.readADC(2);
   int16_t A3 = ADS.readADC(3);
 
-  Serial.print("A0: ");
   Serial.print(ADS.toVoltage(A0), 3);
-  Serial.print(" A1: ");
+  Serial.print("V, ");
   Serial.print(ADS.toVoltage(A1), 3);
-  Serial.print(" A2: ");
+  Serial.print("V, ");
   Serial.print(ADS.toVoltage(A2), 3);
-  Serial.print(" A3: ");
-  Serial.println(ADS.toVoltage(A3), 3);
+  Serial.print("V, ");
+  Serial.print(ADS.toVoltage(A3), 3);
+  Serial.println("V");
 
-  delay(500);
+  delay(1000);
 }
